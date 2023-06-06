@@ -1,0 +1,12 @@
+
+#define SHA512_ALIGNED_SIZE 64
+#define PUBKEY_ALIGNED_SIZE 32
+#define SHA3_256_ALIGNED_SIZE 32
+#define RIPEMD_ALIGNED_SIZE 32
+
+#define NUM_STATES 29440
+
+// must be equal to ChaChaStateSizeInBytes
+#define CHACHA_STATE_SIZE 64
+
+#define REFRESH_RATE 0.5
