@@ -1,5 +1,5 @@
-cuda-based symbol address vanity gen
-============================
+cuda-based symbol address vanity generator
+==========================================
 
 This is cuda-based Symbol address vanity generator.
 

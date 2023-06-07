@@ -23,6 +23,7 @@
 #include "ripemd_kernel.h"
 #include "matching_kernel.h"
 
+#include "version.h"
 #include "vg_constants.h"
 
 #include "gpu_errors.h"
@@ -389,6 +390,8 @@ int main(int argc, char** argv) {
 	int gpuCount = 0;
 	cudaGetDeviceCount(&gpuCount);
 
+	printf("Cuda-based Symbol address vanity generator " VG_STR_VERSION "\n\n");
+
 	if (argc < 3) {
 		printf(R"(Syntax:
   cuda-symbol-vanity-gen.exe [pattern] [#loops]
@@ -521,9 +524,10 @@ int main(int argc, char** argv) {
 		auto finish = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double> elapsed = finish - start;
 
-		auto hps = (num_repetitions * NUM_STATES) / elapsed.count();
+		auto total_keys = static_cast<uint64_t>(num_repetitions) * NUM_STATES;
+		auto hps = total_keys / elapsed.count();
 		auto mhps = hps / 1000 / 1000;
-		printf("\ntook %f %d (%f mhps, %f)\n", elapsed.count(), (num_repetitions * NUM_STATES), mhps, hps);
+		printf("\ntook %f seconds, generated %lld keys, rate: %f Mhps, %f hps\n", elapsed.count(), total_keys, mhps, hps);
 	}
 
 	gpuErrchk(cudaPeekAtLastError());
